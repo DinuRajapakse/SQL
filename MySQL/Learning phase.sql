@@ -155,5 +155,17 @@ modify headquaters_phone_number varchar(255) NULL;
 alter table companies
 change column headquaters_phone_number headquaters_phone_number varchar(255) not null;
 
+-- writing clean code
 use sales;
-select * from customers;
+
+CREATE TABLE IF NOT EXISTS test 
+(
+    numbers 	INT(10),
+    words 		VARCHAR(10)
+);
+
+SELECT 
+    *
+FROM
+    test;
+drop table test;
