@@ -153,4 +153,7 @@ alter table companies
 modify headquaters_phone_number varchar(255) NULL;
 
 alter table companies
-change column headquaters_phone_number headquaters_phone_number varchar(255) not null; 
+change column headquaters_phone_number headquaters_phone_number varchar(255) not null;
+
+use sales;
+select * from customers;
