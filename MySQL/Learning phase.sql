@@ -169,3 +169,9 @@ SELECT
 FROM
     test;
 drop table test;
+
+use sales;
+SELECT 
+    *
+FROM
+    customers;
