@@ -219,3 +219,161 @@ select* from departments;
 DELETE FROM departments 
 WHERE
     dept_no = 'd010';
+
+use employees;
+#joins: builds relationships between tables. 
+#joins shows a result set containing fields derived from two or more tables. 
+#step 1: find a common column. As long as you have this the columns
+#can be connected
+
+SELECT 
+    *
+FROM
+    departments_dup;
+ 
+ alter table departments_dup
+ change column dept_name dept_name varchar(40) null;
+ 
+ alter table departments_dup
+ change column dept_no dept_no char(4) null;
+ 
+ insert into departments_dup (dept_name)
+ values('Public Relations');
+ 
+ SELECT 
+    *
+FROM
+    departments_dup;
+
+DELETE FROM departments_dup 
+WHERE
+    dept_no = 'd002';
+ 
+ SELECT 
+    *
+FROM
+    departments_dup;
+
+ SELECT 
+    *
+FROM
+    departments;
+
+drop table departments_dup;
+
+CREATE TABLE departments_dup (
+    dept_no CHAR(4) NULL,
+    dept_name VARCHAR(40) NULL
+);
+
+insert into departments_dup (dept_no, dept_name)
+select * from departments;
+
+select * from departments_dup;
+
+insert into departments_dup (dept_name)
+values('Public Relations');
+
+DELETE FROM departments_dup 
+WHERE
+    dept_no = 'd002';
+
+insert into departments_dup (dept_no)
+values('d010'),('d011');
+
+SELECT 
+    *
+FROM
+    departments_dup
+ORDER BY dept_no;
+
+drop table if exists dept_manager_dup;
+
+CREATE TABLE dept_manager_dup (
+    emp_no INT(11) NOT NULL,
+    dept_no CHAR(4) NULL,
+    from_date DATE NOT NULL,
+    to_date DATE NULL
+);
+
+insert into dept_manager_dup(emp_no, from_date)
+values
+(999904, '2017-01-01'),
+(999905, '2017-01-01'),
+(999906, '2017-01-01'),
+(999907, '2017-01-01');
+
+select * from dept_manager_dup;
+
+DELETE FROM dept_manager_dup 
+WHERE
+    dept_no = 'd001';
+
+insert into departments_dup(dept_name)
+values ('Public Relations');
+
+DELETE FROM departments_dup 
+WHERE
+    dept_no = 'd002';
+
+SELECT 
+    *
+FROM
+    departments_dup
+ORDER BY dept_no;
+
+#inner join
+
+SELECT 
+    *
+FROM
+    departments_dup
+ORDER BY dept_no;
+
+insert into dept_manager_dup
+select * from dept_manager;
+
+SELECT 
+    *
+FROM
+    dept_manager_dup
+ORDER BY dept_no;
+
+SELECT 
+    m.dept_no, m.emp_no, d.dept_name
+FROM
+    dept_manager_dup m
+        INNER JOIN
+    departments_dup d ON m.dept_no = d.dept_no
+ORDER BY m.dept_no;
+
+SELECT 
+    *
+FROM
+    dept_manager_dup;
+    
+
+SELECT 
+    *
+FROM
+    departments_dup;
+    
+-- Extract a list containing information about all managers’ employee number,
+-- first and last name, department number, and hire date. 
+
+SELECT 
+    m.emp_no, m.dept_no, e.first_name, e.last_name, e.hire_date
+FROM
+    dept_manager_dup m
+        INNER JOIN
+    employees e ON m.emp_no = e.emp_no;
+#the code below will do the same thing. 
+SELECT 
+    e.emp_no, e.first_name, e.last_name, dm.dept_no, e.hire_date
+FROM
+    employees e
+        JOIN #inner join and join are the same thing. 
+    dept_manager dm ON e.emp_no = dm.emp_no;
+    
+#duplicate records
+-- use group by to handle this
