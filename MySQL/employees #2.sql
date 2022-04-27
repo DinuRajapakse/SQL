@@ -377,3 +377,56 @@ FROM
     
 #duplicate records
 -- use group by to handle this
+
+use employees;
+
+#left join
+
+-- delete from dept_manager_dup
+-- where emp_no = '110228
+SELECT 
+    COUNT(emp_no)
+FROM
+    dept_manager_dup
+WHERE
+    emp_no = '110228'
+GROUP BY emp_no;
+
+SELECT 
+    *
+FROM
+    dept_manager_dup;
+ 
+ 
+ #Exercise
+	-- Join the 'employees' and the 'dept_manager' tables to return a subset of all the employees
+	-- whose last name is Markovitch (This is all of the left table).
+    -- See if the output contains a manager with that name(this is the common area between the 
+    -- left and the right. The far right section is not included.  
+SELECT 
+    e.emp_no, e.first_name, e.last_name, d.dept_no, d.from_date
+FROM
+    employees e
+        LEFT JOIN
+    dept_manager d ON e.emp_no = d.emp_no
+WHERE
+    e.last_name = 'Markovitch'
+ORDER BY d.dept_no desc, e.emp_no;
+
+#the code below will give the same results
+
+SELECT 
+    e.emp_no,
+    e.first_name,
+    e.last_name,
+    dm.dept_no,
+    dm.from_date
+FROM
+    employees e
+        LEFT JOIN
+    dept_manager dm ON e.emp_no = dm.emp_no
+WHERE
+    e.last_name = 'Markovitch'
+ORDER BY dm.dept_no DESC , e.emp_no;
+
+#right joins
