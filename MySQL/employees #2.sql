@@ -429,4 +429,70 @@ WHERE
     e.last_name = 'Markovitch'
 ORDER BY dm.dept_no DESC , e.emp_no;
 
-#right joins
+#new and old syntax of joining
+use employees;
+
+#refill dept_manager_dup table
+delete from dept_manager_dup;
+insert into dept_manager_dup
+(emp_no, dept_no, from_date, to_date)
+select * from dept_manager;
+
+#refill deptartments_dup table
+delete from departments_dup;
+insert into departments_dup (dept_no, dept_name)
+select * from departments;
+
+
+select * from dept_manager_dup
+
+#join the department_dup and dept_manager_dup table on dept_no column.
+#Include the dept_no, emp_no and dept_name cols. 
+
+SELECT 
+    m.emp_no, d.dept_no, d.dept_name, m.emp_no
+FROM
+    dept_manager_dup m
+        INNER JOIN
+    departments_dup d ON d.dept_no = m.dept_no
+ORDER BY d.dept_no;
+
+#perform the same class using the where clause
+SELECT 
+    m.dept_no, d.dept_name, m.emp_no
+FROM
+    dept_manager_dup m,
+    departments_dup d
+WHERE
+    d.dept_no = m.dept_no
+ORDER BY d.dept_no;
+#note: where is slower than join
+
+-- Extract a list containing information about all managers’ employee number, 
+-- first and last name, department number, and hire date. Use the old type of join
+-- syntax to obtain the result.
+
+SELECT 
+    e.emp_no,
+    e.first_name,
+    e.last_name,
+    d.dept_no,
+    e.hire_date
+FROM
+    employees e,
+    dept_manager_dup d
+WHERE
+    e.emp_no = d.emp_no;
+
+#verify with join
+SELECT 
+    e.emp_no, e.first_name, e.last_name, d.dept_no, e.hire_date
+FROM
+    employees e
+        INNER JOIN
+    dept_manager_dup d ON e.emp_no = d.emp_no
+ORDER BY emp_no;
+
+#using join and where together
+
+
